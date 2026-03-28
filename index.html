@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ResumeAI — Professional Resume & Portfolio Builder</title>
+  <meta name="description" content="Create a stunning professional resume and personal portfolio in minutes using AI-powered suggestions, multiple premium templates, and instant PDF export." />
+  <meta name="keywords" content="resume builder, AI resume, portfolio generator, PDF resume, professional resume" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- PDF Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo" onclick="navigateTo('landing')" style="cursor:pointer">
+        <div class="logo-mark">R</div>
+        <span>Resume<span class="text-accent">AI</span></span>
+      </div>
+      <div class="nav-links" id="nav-links">
+        <a href="#" id="nl-home" onclick="navigateTo('landing');return false;" class="nav-link active-link">Home</a>
+        <a href="#" id="nl-builder" onclick="navigateTo('builder');return false;" class="nav-link">Builder</a>
+        <a href="#" id="nl-preview" onclick="navigateTo('preview');return false;" class="nav-link" style="display:none">Preview</a>
+        <a href="#" id="nl-portfolio" onclick="navigateTo('portfolio');return false;" class="nav-link" style="display:none">Portfolio</a>
+      </div>
+      <div class="nav-cta">
+        <button class="btn btn-primary" id="nav-cta-btn" onclick="navigateTo('builder')">
+          <i class="fas fa-magic"></i> Start Building
+        </button>
+      </div>
+      <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileNav()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#" onclick="navigateTo('landing');closeMobileNav();return false;">Home</a>
+      <a href="#" onclick="navigateTo('builder');closeMobileNav();return false;">Builder</a>
+      <a href="#" id="mnl-preview" onclick="navigateTo('preview');closeMobileNav();return false;" style="display:none">Preview</a>
+      <a href="#" id="mnl-portfolio" onclick="navigateTo('portfolio');closeMobileNav();return false;" style="display:none">Portfolio</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       VIEW: LANDING PAGE
+  ============================================================ -->
+  <div id="view-landing" class="view active">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-bg">
+        <div class="hero-gradient-mesh"></div>
+        <div class="grid-overlay"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-text">
+            <div class="hero-badge">
+              <span class="badge-pulse"></span>
+              <span>AI-Powered · Free · No Signup Required</span>
+            </div>
+            <h1 class="hero-title">
+              Build Your Dream<br>
+              <span class="gradient-text">Resume & Portfolio</span><br>
+              in <span class="underline-text">Minutes</span>
+            </h1>
+            <p class="hero-subtitle">
+              Transform your career story into a stunning professional resume and live portfolio website.
+              Powered by AI suggestions, multiple premium templates, and one-click PDF export.
+            </p>
+            <div class="hero-btns">
+              <button class="btn btn-primary btn-xl" onclick="navigateTo('builder')" id="hero-cta">
+                <i class="fas fa-rocket"></i>
+                <span>Build My Resume — Free</span>
+              </button>
+              <button class="btn btn-ghost btn-xl" onclick="document.getElementById('templates-section').scrollIntoView({behavior:'smooth'})">
+                <i class="fas fa-eye"></i>
+                <span>See Templates</span>
+              </button>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-item">
+                <strong>50K+</strong>
+                <span>Resumes Created</span>
+              </div>
+              <div class="stat-sep"></div>
+              <div class="stat-item">
+                <strong>4</strong>
+                <span>Premium Templates</span>
+              </div>
+              <div class="stat-sep"></div>
+              <div class="stat-item">
+                <strong>100%</strong>
+                <span>Free to Use</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="floating-card resume-mock">
+              <div class="mock-sidebar">
+                <div class="mock-avatar"></div>
+                <div class="mock-name-block">
+                  <div class="mock-bar w70"></div>
+                  <div class="mock-bar w50 thin"></div>
+                </div>
+                <div class="mock-section-sm">
+                  <div class="mock-bar w40 label"></div>
+                  <div class="mock-skill-row">
+                    <div class="mock-bar w60 skill-bar"></div>
+                    <div class="mock-bar w80 skill-bar"></div>
+                    <div class="mock-bar w50 skill-bar"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mock-body">
+                <div class="mock-bar w80 heading"></div>
+                <div class="mock-bar w55 sub"></div>
+                <div class="mock-divider"></div>
+                <div class="mock-bar w40 label"></div>
+                <div class="mock-bar w100"></div>
+                <div class="mock-bar w90"></div>
+                <div class="mock-bar w70"></div>
+                <div class="mock-divider"></div>
+                <div class="mock-bar w40 label"></div>
+                <div class="mock-tags-row">
+                  <span class="mock-tag"></span>
+                  <span class="mock-tag"></span>
+                  <span class="mock-tag"></span>
+                </div>
+              </div>
+            </div>
+            <div class="floating-badge badge-ai">
+              <i class="fas fa-magic"></i>
+              <span>AI Suggestions</span>
+            </div>
+            <div class="floating-badge badge-pdf">
+              <i class="fas fa-check-circle"></i>
+              <span>PDF Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section features-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Features</div>
+          <h2 class="section-title">Everything You Need to <span class="gradient-text">Stand Out</span></h2>
+          <p class="section-sub">Powerful tools crafted for modern professionals to land their dream jobs faster.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card animate-up" style="--delay:0s">
+            <div class="feature-icon-wrap" style="--c:#3B82F6">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3>AI-Powered Suggestions</h3>
+            <p>Get smart recommendations — action verbs, skill keywords, and summary improvements tailored to your role.</p>
+          </div>
+          <div class="feature-card animate-up" style="--delay:.08s">
+            <div class="feature-icon-wrap" style="--c:#8B5CF6">
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <h3>4 Premium Templates</h3>
+            <p>Choose from Nexus, Aurora, Slate, and Prism — all ATS-friendly and recruiter-approved designs.</p>
+          </div>
+          <div class="feature-card animate-up" style="--delay:.16s">
+            <div class="feature-icon-wrap" style="--c:#06B6D4">
+              <i class="fas fa-file-pdf"></i>
+            </div>
+            <h3>Instant PDF Export</h3>
+            <p>Download a pixel-perfect PDF of your resume with a single click. Always formatted correctly.</p>
+          </div>
+          <div class="feature-card animate-up" style="--delay:.24s">
+            <div class="feature-icon-wrap" style="--c:#10B981">
+              <i class="fas fa-globe"></i>
+            </div>
+            <h3>Portfolio Generator</h3>
+            <p>Auto-generate a live personal portfolio webpage from your resume data. No coding required.</p>
+          </div>
+          <div class="feature-card animate-up" style="--delay:.32s">
+            <div class="feature-icon-wrap" style="--c:#F59E0B">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>Mobile Responsive</h3>
+            <p>Build and edit your resume from any device. The experience is seamless on phones, tablets, and desktops.</p>
+          </div>
+          <div class="feature-card animate-up" style="--delay:.4s">
+            <div class="feature-icon-wrap" style="--c:#EF4444">
+              <i class="fas fa-cloud"></i>
+            </div>
+            <h3>Auto-Save Progress</h3>
+            <p>Your changes are automatically saved to your browser. Pick up right where you left off, anytime.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section hiw-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Process</div>
+          <h2 class="section-title">From Blank Page to <span class="gradient-text">Dream Resume</span></h2>
+        </div>
+        <div class="hiw-steps">
+          <div class="hiw-step">
+            <div class="hiw-number">01</div>
+            <div class="hiw-icon"><i class="fas fa-keyboard"></i></div>
+            <h3>Enter Your Details</h3>
+            <p>Fill our guided step-by-step form with your experience, education, skills, and projects — in plain English.</p>
+          </div>
+          <div class="hiw-connector">
+            <div class="connector-line"></div>
+            <i class="fas fa-arrow-right connector-arrow"></i>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-number">02</div>
+            <div class="hiw-icon"><i class="fas fa-magic"></i></div>
+            <h3>Enhance with AI</h3>
+            <p>Choose your template and let AI suggestions polish your content with industry-specific language and power verbs.</p>
+          </div>
+          <div class="hiw-connector">
+            <div class="connector-line"></div>
+            <i class="fas fa-arrow-right connector-arrow"></i>
+          </div>
+          <div class="hiw-step">
+            <div class="hiw-number">03</div>
+            <div class="hiw-icon"><i class="fas fa-download"></i></div>
+            <h3>Download & Launch</h3>
+            <p>Export your resume as PDF and publish your personal portfolio website — ready to impress recruiters.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Templates Showcase -->
+    <section class="section templates-section" id="templates-section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Templates</div>
+          <h2 class="section-title">Pick Your <span class="gradient-text">Signature Style</span></h2>
+          <p class="section-sub">Four distinct personalities. One goal — to get you hired.</p>
+        </div>
+        <div class="templates-grid">
+
+          <div class="tpl-card" onclick="navigateTo('builder')">
+            <div class="tpl-thumb nexus-preview">
+              <div class="np-sidebar">
+                <div class="np-av"></div>
+                <div class="np-bar w60"></div>
+                <div class="np-bar w45 sm"></div>
+                <div class="np-gap"></div>
+                <div class="np-label"></div>
+                <div class="np-skill"><div style="width:80%"></div></div>
+                <div class="np-skill"><div style="width:65%"></div></div>
+                <div class="np-skill"><div style="width:90%"></div></div>
+              </div>
+              <div class="np-body">
+                <div class="np-bar w75 hd"></div>
+                <div class="np-bar w50 sm hd"></div>
+                <div class="np-gap"></div>
+                <div class="np-section-label"></div>
+                <div class="np-bar w95 hd"></div>
+                <div class="np-bar w80 hd"></div>
+                <div class="np-bar w65 hd"></div>
+              </div>
+            </div>
+            <div class="tpl-info">
+              <span class="tpl-badge popular">⭐ Popular</span>
+              <h3>Nexus</h3>
+              <p>Dark sidebar · Skills bars · Modern</p>
+            </div>
+          </div>
+
+          <div class="tpl-card" onclick="navigateTo('builder')">
+            <div class="tpl-thumb aurora-preview">
+              <div class="ap-header"></div>
+              <div class="ap-body">
+                <div class="ap-left">
+                  <div class="ap-bar w70"></div>
+                  <div class="ap-tags">
+                    <span></span><span></span><span></span>
+                  </div>
+                  <div class="ap-bar w80"></div>
+                </div>
+                <div class="ap-right">
+                  <div class="ap-bar w90 dk"></div>
+                  <div class="ap-bar w75 dk"></div>
+                  <div class="ap-bar w60 dk"></div>
+                  <div class="ap-gap"></div>
+                  <div class="ap-bar w85 dk"></div>
+                  <div class="ap-bar w70 dk"></div>
+                </div>
+              </div>
+            </div>
+            <div class="tpl-info">
+              <span class="tpl-badge modern">✨ Modern</span>
+              <h3>Aurora</h3>
+              <p>Gradient header · Two columns · Clean</p>
+            </div>
+          </div>
+
+          <div class="tpl-card" onclick="navigateTo('builder')">
+            <div class="tpl-thumb slate-preview">
+              <div class="sp-header">
+                <div class="sp-bar w55"></div>
+                <div class="sp-bar w40 sm"></div>
+              </div>
+              <div class="sp-rule"></div>
+              <div class="sp-section-label"></div>
+              <div class="sp-bar w90"></div>
+              <div class="sp-bar w75"></div>
+              <div class="sp-rule"></div>
+              <div class="sp-section-label"></div>
+              <div class="sp-bar w85"></div>
+              <div class="sp-bar w65"></div>
+            </div>
+            <div class="tpl-info">
+              <span class="tpl-badge classic">📄 Classic</span>
+              <h3>Slate</h3>
+              <p>ATS-friendly · Traditional · Clean</p>
+            </div>
+          </div>
+
+          <div class="tpl-card" onclick="navigateTo('builder')">
+            <div class="tpl-thumb prism-preview">
+              <div class="prp-accent"></div>
+              <div class="prp-body">
+                <div class="prp-bar w70 hd"></div>
+                <div class="prp-bar w50 sm hd"></div>
+                <div class="prp-badges">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="prp-timeline">
+                  <div class="prp-item">
+                    <div class="prp-dot"></div>
+                    <div>
+                      <div class="prp-bar w70 hd"></div>
+                      <div class="prp-bar w55 hd"></div>
+                    </div>
+                  </div>
+                  <div class="prp-item">
+                    <div class="prp-dot"></div>
+                    <div>
+                      <div class="prp-bar w60 hd"></div>
+                      <div class="prp-bar w45 hd"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tpl-info">
+              <span class="tpl-badge creative">🎨 Creative</span>
+              <h3>Prism</h3>
+              <p>Bold accent · Timeline · Eye-catching</p>
+            </div>
+          </div>
+
+        </div>
+        <div class="templates-cta">
+          <button class="btn btn-primary btn-xl" onclick="navigateTo('builder')">
+            <i class="fas fa-magic"></i> Start With a Template
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div class="cta-glow-1"></div>
+          <div class="cta-glow-2"></div>
+          <div class="cta-inner">
+            <h2>Ready to Land Your <span class="gradient-text">Dream Job?</span></h2>
+            <p>Join 50,000+ professionals who built their career story with ResumeAI. It takes less than 10 minutes.</p>
+            <button class="btn btn-primary btn-xl" onclick="navigateTo('builder')">
+              <i class="fas fa-rocket"></i> Build My Resume — Free
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="logo-mark">R</div>
+            <span>Resume<span class="text-accent">AI</span></span>
+          </div>
+          <p>Building careers, one resume at a time.</p>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; 2026 ResumeAI · All rights reserved.</span>
+          <span>Made with <i class="fas fa-heart" style="color:#EF4444"></i> for job seekers</span>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /view-landing -->
+
+
+  <!-- ============================================================
+       VIEW: BUILDER (Multi-step Form)
+  ============================================================ -->
+  <div id="view-builder" class="view">
+    <div class="builder-wrap">
+
+      <!-- Sidebar -->
+      <aside class="builder-aside" id="builder-aside">
+        <div class="builder-logo" onclick="navigateTo('landing')" style="cursor:pointer">
+          <div class="logo-mark sm">R</div>
+          <span>Resume<span class="text-accent">AI</span></span>
+        </div>
+        <nav class="steps-nav" id="steps-nav">
+          <!-- Injected by JS -->
+        </nav>
+        <div class="aside-footer">
+          <button class="btn-text-danger" onclick="confirmClear()">
+            <i class="fas fa-trash-alt"></i> Clear & Restart
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="builder-content-area">
+        <!-- Progress Bar -->
+        <div class="builder-progress-wrap">
+          <div class="builder-progress-bar" id="builder-progress-bar">
+            <div class="builder-progress-fill" id="builder-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Step Navigation Header -->
+        <div class="step-nav-header">
+          <button class="btn btn-ghost btn-sm" id="prev-btn" onclick="prevStep()">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <span class="step-counter" id="step-counter">Step 1 of 8</span>
+          <button class="btn btn-primary btn-sm" id="next-btn" onclick="nextStep()">
+            Next <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Form Steps Container -->
+        <div class="form-steps-container" id="form-steps-container">
+          <!-- Injected by JS -->
+        </div>
+      </main>
+    </div>
+  </div><!-- /view-builder -->
+
+
+  <!-- ============================================================
+       VIEW: PREVIEW
+  ============================================================ -->
+  <div id="view-preview" class="view">
+    <div class="preview-wrap">
+
+      <!-- Options Sidebar -->
+      <aside class="preview-aside">
+        <h2 class="aside-heading">
+          <i class="fas fa-sliders-h"></i> Resume Options
+        </h2>
+
+        <div class="aside-group">
+          <div class="group-title"><i class="fas fa-palette"></i> Choose Template</div>
+          <div class="tpl-selector" id="tpl-selector">
+            <button class="tpl-sel-btn active" data-template="nexus" onclick="switchTemplate('nexus')">
+              <span class="tpl-color-dot" style="background:linear-gradient(135deg,#1e3a5f,#3B82F6)"></span>
+              <div>
+                <strong>Nexus</strong>
+                <small>Modern Dark</small>
+              </div>
+            </button>
+            <button class="tpl-sel-btn" data-template="aurora" onclick="switchTemplate('aurora')">
+              <span class="tpl-color-dot" style="background:linear-gradient(135deg,#6366F1,#06B6D4)"></span>
+              <div>
+                <strong>Aurora</strong>
+                <small>Clean Modern</small>
+              </div>
+            </button>
+            <button class="tpl-sel-btn" data-template="slate" onclick="switchTemplate('slate')">
+              <span class="tpl-color-dot" style="background:linear-gradient(135deg,#374151,#6B7280)"></span>
+              <div>
+                <strong>Slate</strong>
+                <small>Professional</small>
+              </div>
+            </button>
+            <button class="tpl-sel-btn" data-template="prism" onclick="switchTemplate('prism')">
+              <span class="tpl-color-dot" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)"></span>
+              <div>
+                <strong>Prism</strong>
+                <small>Creative Bold</small>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="aside-group">
+          <div class="group-title"><i class="fas fa-bolt"></i> Quick Actions</div>
+          <div class="quick-actions">
+            <button class="qa-btn primary" onclick="downloadPDF()">
+              <i class="fas fa-file-pdf"></i>
+              <span>Download PDF</span>
+            </button>
+            <button class="qa-btn" onclick="navigateTo('portfolio')">
+              <i class="fas fa-globe"></i>
+              <span>View Portfolio</span>
+            </button>
+            <button class="qa-btn" onclick="navigateTo('builder')">
+              <i class="fas fa-pencil-alt"></i>
+              <span>Edit Resume</span>
+            </button>
+            <button class="qa-btn ai" onclick="showAISuggestions()">
+              <i class="fas fa-magic"></i>
+              <span>AI Suggestions</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="aside-tip">
+          <i class="fas fa-lightbulb"></i>
+          <span>Tip: Use AI Suggestions to improve your resume with industry-specific language and power verbs.</span>
+        </div>
+      </aside>
+
+      <!-- Preview Main -->
+      <main class="preview-main-area">
+        <div class="preview-topbar">
+          <div class="preview-topbar-left">
+            <span class="preview-live-dot"></span>
+            <span>Live Preview</span>
+          </div>
+          <div class="preview-topbar-right">
+            <button class="btn btn-ghost btn-sm" onclick="navigateTo('builder')">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="downloadPDF()">
+              <i class="fas fa-download"></i> Download PDF
+            </button>
+          </div>
+        </div>
+        <div class="resume-preview-scroll">
+          <div class="resume-paper-wrap">
+            <div id="resume-output">
+              <!-- Resume HTML injected here -->
+            </div>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div><!-- /view-preview -->
+
+
+  <!-- ============================================================
+       VIEW: PORTFOLIO
+  ============================================================ -->
+  <div id="view-portfolio" class="view">
+    <!-- Portfolio Navigation -->
+    <nav class="portfolio-nav" id="portfolio-nav">
+      <div class="pf-nav-brand" id="pf-nav-brand">My Portfolio</div>
+      <div class="pf-nav-links">
+        <a href="#pf-about">About</a>
+        <a href="#pf-skills">Skills</a>
+        <a href="#pf-projects">Projects</a>
+        <a href="#pf-experience">Experience</a>
+        <a href="#pf-contact">Contact</a>
+      </div>
+      <div class="pf-nav-actions">
+        <button class="btn btn-primary btn-sm" onclick="downloadPDF()">
+          <i class="fas fa-download"></i> Download Resume
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="navigateTo('preview')">
+          <i class="fas fa-arrow-left"></i> Resume
+        </button>
+      </div>
+    </nav>
+    <div id="portfolio-content">
+      <!-- Portfolio HTML injected here -->
+    </div>
+  </div><!-- /view-portfolio -->
+
+
+  <!-- ============================================================
+       AI SUGGESTIONS MODAL
+  ============================================================ -->
+  <div class="modal-overlay" id="ai-modal" onclick="handleModalOverlayClick(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon"><i class="fas fa-magic"></i></div>
+          <div>
+            <h2>AI Resume Suggestions</h2>
+            <p>Personalized tips to strengthen your resume</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="hideAIModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="ai-modal-body">
+        <!-- AI suggestions injected here -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       CONFIRM MODAL
+  ============================================================ -->
+  <div class="modal-overlay" id="confirm-modal" onclick="handleConfirmOverlayClick(event)">
+    <div class="modal-box small">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-icon danger"><i class="fas fa-exclamation-triangle"></i></div>
+          <div>
+            <h2>Clear All Data?</h2>
+            <p>This will erase all your entered information.</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="hideConfirmModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-secondary);margin-bottom:1.5rem">Are you sure you want to start over? All your current resume data will be permanently deleted.</p>
+        <div style="display:flex;gap:1rem;justify-content:flex-end">
+          <button class="btn btn-ghost" onclick="hideConfirmModal()">Cancel</button>
+          <button class="btn btn-danger" onclick="clearAllData()">Yes, Clear All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+  <script src="templates.js"></script>
+  <script src="portfolio.js"></script>
+</body>
+</html>
